@@ -1,5 +1,5 @@
 extends KinematicBody2D
-
+#this comment isn't useful in any way 
 
 var blink = false
 var gravity = 950
