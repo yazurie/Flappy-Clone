@@ -1,5 +1,5 @@
 extends KinematicBody2D
-
+#this comment isn't useful in any way 
 
 var blink = false
 var gravity = 950
@@ -13,6 +13,7 @@ var start = false
 var resulshow = false
 var resultscore = 0
 onready var result = get_parent().get_node("CanvasLayer/result")
+onready var jumpsfx = get_node("jump")
 
 signal Death
 func _ready():
@@ -27,7 +28,7 @@ func Input():
 		start = true
 		rotation_degrees = -20
 		motion.y = jumpforce
-		$jump.play()
+		jumpsfx.play()
 
 func _physics_process(delta):
 	
