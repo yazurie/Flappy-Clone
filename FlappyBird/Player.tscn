@@ -1,0 +1,94 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Files/yellowbird-upflap.png" type="Texture" id=2]
+[ext_resource path="res://Files/yellowbird-midflap.png" type="Texture" id=3]
+[ext_resource path="res://Files/yellowbird-downflap.png" type="Texture" id=4]
+[ext_resource path="res://Files/Sounds/audio_point.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Files/Sounds/audio_wing.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Files/Sounds/audio_hit.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Files/Sounds/swoosh.wav" type="AudioStream" id=8]
+[ext_resource path="res://Files/Sounds/audio_die.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Files/bluebird-upflap.png" type="Texture" id=10]
+[ext_resource path="res://Files/bluebird-downflap.png" type="Texture" id=11]
+[ext_resource path="res://Files/redbird-upflap.png" type="Texture" id=12]
+[ext_resource path="res://Files/bluebird-midflap.png" type="Texture" id=13]
+[ext_resource path="res://Files/redbird-midflap.png" type="Texture" id=14]
+[ext_resource path="res://Files/redbird-downflap.png" type="Texture" id=15]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "flapyellow",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "flapred",
+"speed": 6.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 11 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "flapblue",
+"speed": 6.0
+} ]
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+z_index = 1
+z_as_relative = false
+frames = SubResource( 1 )
+animation = "flapblue"
+frame = 1
+playing = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 55, 0 )
+current = true
+limit_top = 0
+limit_bottom = 500
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -16.7014, 6.96537, -17.0641, 2.41851, -14.9877, 2.02747, -14.8518, -3.91088, -13.0021, -3.79336, -13.1985, -5.97813, -11.1973, -5.81747, -11.156, -8.26202, -9.65237, -8.07934, -8.97214, -9.605, -5.59768, -9.9538, -5.3287, -11.7604, 6.93722, -11.7052, 6.80869, -10.1042, 8.5721, -9.6838, 8.70245, -8.99165, 10.1308, -8.62236, 10.5314, -6.26875, 12.2939, -5.96143, 12.7938, -0.0255437, 14.8581, -0.265147, 14.9176, 1.74787, 16.7571, 1.785, 16.9131, 3.97159, 15.035, 3.72868, 14.6883, 4.60364, 14.9094, 7.58769, 13.3079, 7.56966, 13.1425, 9.85942, 3.39238, 9.90573, 3.13037, 12.0219, -7.46253, 11.7795, -7.27093, 10.0814, -15.1625, 9.92687, -14.8552, 8.16439, -17.1384, 8.1469 )
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PoolVector2Array( -16.7014, 6.96537, -17.0641, 2.41851, -14.9877, 2.02747, -14.8518, -3.91088, -13.0021, -3.79336, -13.1985, -5.97813, -11.1973, -5.81747, -11.156, -8.26202, -9.65237, -8.07934, -8.97214, -9.605, -5.59768, -9.9538, -5.3287, -11.7604, 6.93722, -11.7052, 6.80869, -10.1042, 8.5721, -9.6838, 8.70245, -8.99165, 10.1308, -8.62236, 10.5314, -6.26875, 12.2939, -5.96143, 12.7938, -0.0255437, 14.8581, -0.265147, 14.9176, 1.74787, 16.7571, 1.785, 16.9131, 3.97159, 15.035, 3.72868, 14.6883, 4.60364, 14.9094, 7.58769, 13.3079, 7.56966, 13.1425, 9.85942, 3.39238, 9.90573, 3.13037, 12.0219, -7.46253, 11.7795, -7.27093, 10.0814, -15.1625, 9.92687, -14.8552, 8.16439, -17.1384, 8.1469 )
+
+[node name="Score" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="smooosh" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="die" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
+[node name="beginfly" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="resultanimation" type="Timer" parent="."]
+wait_time = 1.55
+one_shot = true
+
+[node name="playanimation" type="Timer" parent="."]
+wait_time = 2.1
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="finished" from="Hit" to="." method="_on_Hitpipe_finished"]
+[connection signal="timeout" from="beginfly" to="." method="_on_beginfly_timeout"]
+[connection signal="timeout" from="resultanimation" to="." method="_on_resultanimation_timeout"]
+[connection signal="timeout" from="playanimation" to="." method="_on_playanimation_timeout"]
