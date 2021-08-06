@@ -28,7 +28,7 @@ func Input():
 		start = true
 		rotation_degrees = -20
 		motion.y = jumpforce
-		jump.play()
+		jumpsfx.play()
 
 func _physics_process(delta):
 	
